@@ -1,0 +1,137 @@
+#:import MDBoxLayout kivymd.uix.boxlayout.MDBoxLayout
+#:import MDLabel kivymd.uix.label.MDLabel
+#:import MDTextField kivymd.uix.textfield.MDTextField
+#:import MDRaisedButton kivymd.uix.button.MDRaisedButton
+#:import MDCard kivymd.uix.card.MDCard
+
+
+##############################################################################
+# LOGIN SCREEN
+##############################################################################
+<LoginScreen>:
+    name: "login"
+    md_bg_color: 0.95, 0.95, 1, 1
+
+    MDBoxLayout:
+        orientation: "vertical"
+        size_hint: None, None
+        size: "400dp", "420dp"
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+        spacing: "20dp"
+
+        MDCard:
+            orientation: "vertical"
+            padding: "24dp"
+            spacing: "24dp"
+            size_hint: 1, 1
+            elevation: 10
+            radius: [20,]
+
+            MDLabel:
+                text: "Login"
+                font_style: "H4"
+                halign: "center"
+                size_hint_y: None
+                height: self.texture_size[1]
+
+            MDTextField:
+                id: username
+                hint_text: "Username"
+                icon_right: "account"
+                helper_text_mode: "on_focus"
+                size_hint_y: None
+                height: "56dp"
+
+            MDTextField:
+                id: password
+                hint_text: "Password"
+                icon_right: "lock"
+                helper_text_mode: "on_focus"
+                password: True
+                size_hint_y: None
+                height: "56dp"
+
+            # Buttons row
+            MDBoxLayout:
+                orientation: "horizontal"
+                spacing: "20dp"
+
+                MDRaisedButton:
+                    text: "Login"
+                    on_release: root.try_login()
+
+                MDRaisedButton:
+                    text: "Go to Signup"
+                    on_release: root.go_to_signup()
+
+            MDLabel:
+                id: message
+                text: ""
+                halign: "center"
+                theme_text_color: "Error"
+
+
+##############################################################################
+# SIGNUP SCREEN
+##############################################################################
+<SignupScreen>:
+    name: "signup"
+    md_bg_color: 0.95, 0.95, 1, 1
+
+    MDBoxLayout:
+        orientation: "vertical"
+        size_hint: None, None
+        size: "400dp", "450dp"
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+        spacing: "20dp"
+
+        MDCard:
+            orientation: "vertical"
+            padding: "24dp"
+            spacing: "24dp"
+            size_hint: 1, 1
+            elevation: 10
+            radius: [20,]
+
+            MDLabel:
+                text: "📝 Signup"
+                font_style: "H4"
+                halign: "center"
+                size_hint_y: None
+                height: self.texture_size[1]
+
+            MDTextField:
+                id: username
+                hint_text: "Username"
+                icon_right: "account"
+                helper_text_mode: "on_focus"
+                size_hint_y: None
+                height: "56dp"
+
+            MDTextField:
+                id: password
+                hint_text: "Password"
+                icon_right: "lock"
+                helper_text_mode: "on_focus"
+                password: True
+                size_hint_y: None
+                height: "56dp"
+
+            MDBoxLayout:
+                orientation: "horizontal"
+                spacing: "20dp"
+
+                MDRaisedButton:
+                    text: "Create Account"
+                    on_release: root.try_signup()
+
+                MDRaisedButton:
+                    text: "Back to Login"
+                    on_release: root.go_to_login()
+
+            MDLabel:
+                id: message
+                text: ""
+                halign: "center"
+                theme_text_color: "Error"
+
