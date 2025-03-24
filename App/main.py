@@ -25,7 +25,7 @@ class MainApp(MDApp):
         sm.add_widget(InsightsScreen(name='insights'))
         sm.add_widget(ForecastScreen(name='forecast'))
         sm.add_widget(SettingsScreen(name='settings'))
-        sm.add_widget(OnboardingScreen(name='onboarding'))  # pure Python
+        sm.add_widget(OnboardingScreen(name='onboarding'))
 
         sm.current = "login"
         return sm

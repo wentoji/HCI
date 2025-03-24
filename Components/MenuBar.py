@@ -4,7 +4,6 @@ from kivymd.uix.menu import MDDropdownMenu
 from kivymd.uix.list import OneLineListItem
 from kivy.metrics import dp
 
-
 class MenuBar(MDBoxLayout):
     def __init__(self, screen_manager, **kwargs):
         super(MenuBar, self).__init__(**kwargs)
@@ -15,13 +14,14 @@ class MenuBar(MDBoxLayout):
         self.padding = dp(10)  # small left/right padding
         self.screen_manager = screen_manager
 
-        # MDDropdownMenu items
+        # MDDropdownMenu items.
+        # Note: for logout, we now set the screen name to "logout"
         self.menu_items = [
             {
                 "viewclass": "OneLineListItem",
                 "text": "Home",
                 "height": dp(48),
-                "on_release": lambda x="pc": self.select_screen(x)
+                "on_release": lambda x="home": self.select_screen(x)
             },
             {
                 "viewclass": "OneLineListItem",
@@ -45,7 +45,7 @@ class MenuBar(MDBoxLayout):
                 "viewclass": "OneLineListItem",
                 "text": "Logout",
                 "height": dp(48),
-                "on_release": lambda x="login": self.select_screen(x)
+                "on_release": lambda x="logout": self.select_screen(x)
             }
         ]
 
@@ -61,9 +61,8 @@ class MenuBar(MDBoxLayout):
             icon="menu",
             pos_hint={"center_y": 0.5}
         )
-        # Fix the extra arg error by using a lambda with *args:
+        # Bind to open the menu.
         self.main_button.bind(on_release=lambda *args: self.open_menu())
-
         self.add_widget(self.main_button)
 
     def open_menu(self):
@@ -72,6 +71,14 @@ class MenuBar(MDBoxLayout):
         self.menu.open()
 
     def select_screen(self, screen_name):
-        """Switch screens, then close the menu."""
-        self.screen_manager.current = screen_name
+        """If logout is selected, reset every screen; then switch screens and close the menu."""
+        if screen_name == "logout":
+            # Iterate over all screens and reset if they have a reset() method.
+            for screen in self.screen_manager.screens:
+                if hasattr(screen, 'reset'):
+                    screen.reset()
+            # Then switch to the login screen.
+            self.screen_manager.current = "login"
+        else:
+            self.screen_manager.current = screen_name
         self.menu.dismiss()
